@@ -1,6 +1,13 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
+
+<br><br><br><br>
+<h2> Game ends in 60 sec </h2>
+<h1> Timer </h1>
+<p id="txt"> 0 </p>
+
+
 <style>
 
 body
@@ -11,9 +18,32 @@ background: black;
 p
 {
 color: rgb(170,130,255);
+font-family: "jokerman";
+font-size: 80px;
+text-align: left ;
+margin-left: 20%; 
 }
 
-div#memory_board{
+h1
+{
+color: red;
+font-family: "cambria";
+font-size: 100px;
+text-align: left ;
+margin-left: 10%; 
+}
+
+h2
+{
+color: blue;
+font-family: "cambria";
+font-size: 60px;
+text-align: right;
+margin-right: 3%; 
+}
+
+div#board
+{
 	background: green;
 	border: 10px inset yellow;
 	width: 540px;
@@ -24,12 +54,13 @@ div#memory_board{
 	left:50%;
 	transform: translateX(-50%) translateY(-50%);
 }
-div#memory_board > div{
-	background: url(download.jpg) no-repeat;
+div#board > div
+{
+	background: url(download.jpg)  no-repeat;
 	border: 2px inset yellow;
 	width:71px;
 	height:71px;
-	float:left;
+	float: left;
 	margin:10px;
 	padding:20px;
 	font-size:64px;
@@ -37,64 +68,89 @@ div#memory_board > div{
 	text-align:center;
 }
 </style>
+
 <script>
 
-var memory_array = ['1','1','2','2','3','3','4','4','5','5','6','6','7','7','8','8'];
+var array = ['1','1','2','2','3','3','4','4','5','5','6','6','7','7','8','8'];
 var memory_values = [];
-var memory_tile_ids = [];
+var tile_ids = [];
 var tiles_flipped = 0;
-Array.prototype.memory_tile_shuffle = function(){
-    var i = this.length, j, temp;
-    while(--i > 0){
-        j = Math.floor(Math.random() * (i+1));
-        temp = this[j];
-        this[j] = this[i];
-        this[i] = temp;
-    }
+
+var c=0;
+var t;
+
+Array.prototype.tile_shuffle = function()
+{
+	var i = this.length, j, temp;
+    	while(--i > 0)
+	{
+        		j = Math.floor(Math.random() * (i+1));
+        		temp = this[j];
+        		this[j] = this[i];
+        		this[i] = temp;
+    	}
 }
-function newBoard(){
+
+function newBoard()
+{
 	tiles_flipped = 0;
-	var output = '';
-    memory_array.memory_tile_shuffle();
-	for(var i = 0; i < memory_array.length; i++){
-		output += '<div id="tile_'+i+'" onclick="memoryFlipTile(this,\''+memory_array[i]+'\')"></div>';
+	var output = "";
+    	array.tile_shuffle();
+	for(var i = 0; i < array.length; i++)
+	{
+		output += '<div id="tile_'+i+'" onclick="memoryFlipTile(this,\''+array[i]+'\')"></div>';
 	}
-	document.getElementById('memory_board').innerHTML = output;
+	document.getElementById('board').innerHTML = output;
+	
+	
+	timedCount();
 }
-function memoryFlipTile(tile,val){
-	if(tile.innerHTML == "" && memory_values.length < 2){
+
+function memoryFlipTile(tile,val)
+{
+	if(tile.innerHTML == "" && memory_values.length < 2)
+	{
 		tile.style.background = '#FFF';
 		tile.innerHTML = val;
-		if(memory_values.length == 0){
+		if(memory_values.length == 0)
+		{
 			memory_values.push(val);
-			memory_tile_ids.push(tile.id);
-		} else if(memory_values.length == 1){
+			tile_ids.push(tile.id);
+		} 
+		else if(memory_values.length == 1)
+		{
 			memory_values.push(val);
-			memory_tile_ids.push(tile.id);
-			if(memory_values[0] == memory_values[1]){
+			tile_ids.push(tile.id);
+			if(memory_values[0] == memory_values[1])	
+			{
 				tiles_flipped += 2;
-				// Clear both arrays
 				memory_values = [];
-            	memory_tile_ids = [];
-				// Check to see if the whole board is cleared
-				if(tiles_flipped == memory_array.length){
+            				tile_ids = [];
+				
+				if(tiles_flipped == array.length || c>60)
+				{
 					alert("Board cleared... generating new board");
-					document.getElementById('memory_board').innerHTML = "";
+					document.getElementById('board').innerHTML = "";
+					stopCount();
+					document.getElementById("txt").innerHTML=0;
 					newBoard();
 				}
-			} else {
-				function flip2Back(){
-				    // Flip the 2 tiles back over
-				    var tile_1 = document.getElementById(memory_tile_ids[0]);
-				    var tile_2 = document.getElementById(memory_tile_ids[1]);
-				    tile_1.style.background = 'url(download.jpg) no-repeat';
-            	    tile_1.innerHTML = "";
-				    tile_2.style.background = 'url(download.jpg) no-repeat';
-            	    tile_2.innerHTML = "";
-				    // Clear both arrays
-				    memory_values = [];
-            	    memory_tile_ids = [];
+			} 
+			
+			else 
+			{
+				function flip2Back()
+				{
+					var tile_1 = document.getElementById(tile_ids[0]);
+				    	var tile_2 = document.getElementById(tile_ids[1]);
+				    	tile_1.style.background = 'url(download.jpg) no-repeat';
+            	    				tile_1.innerHTML = "";
+				    	tile_2.style.background = 'url(download.jpg) no-repeat';
+            	    				tile_2.innerHTML = "";
+				    	memory_values = [];
+            	    				tile_ids = [];
 				}
+				
 				setTimeout(flip2Back, 700);
 			}
 		}
@@ -102,43 +158,34 @@ function memoryFlipTile(tile,val){
 }
 
 
-var c=0;
-var t;
+
 function stopCount()
 {
-clearTimeout(t);
+	clearTimeout(t);
 }
+
 function timedCount()
 {
-document.getElementById('txt').innerHTML=c;
-c=c+1;
-if(c==61)
-{
-alert("time over");
-stopcount();
+	document.getElementById('txt').innerHTML=c;
+	c=c+1;
+	if(c==61)
+	{
+		alert("time over");
+		stopcount();
+		array.tile_shuffle();
+	}
+	
+	t=setTimeout("timedCount()",1000);
 }
-t=setTimeout("timedCount()",1000);
-}
-
-
 
 </script>
 </head>
+
 <body>
-<div id="memory_board"></div>
+
+<div id="board"></div>
+
 <script>newBoard();</script>
-
-
-<center>
-
- <p id="txt"> 0 </p>
- <button type="button" onClick="timedCount()"> Start </button>
- <br><br>
- <button type="button" onClick="stopCount()"> Stop </button>
-
- <p>Click on the Start button above to start the stopwatch.</p>
-
-</center>
 
 </body>
 </html>
