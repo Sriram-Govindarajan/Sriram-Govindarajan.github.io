@@ -130,7 +130,7 @@ function memoryFlipTile(tile,val)
 					alert("Board cleared... generating new board");
 					document.getElementById('board').innerHTML = "";
 					stopCount();
-					document.getElementById("txt").innerHTML=0;
+					c=0;
 					newBoard();
 				}
 			} 
@@ -170,7 +170,6 @@ function timedCount()
 	{
 		alert("time over");
 		stopcount();
-		array.tile_shuffle();
 	}
 	
 	t=setTimeout("timedCount()",1000);
