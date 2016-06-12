@@ -20,12 +20,11 @@ body
 background: rgb(200,190,255);
 }
 
-.button
+.button1
 {
 position: absolute;
-top: 22%;
-left: 47%;
-right: 47%;
+bottom: 80%;
+left:8%;
 background-color: white;
 border: 5px inset rgb(153,0,204);
 color: black;
@@ -37,12 +36,11 @@ cursor: pointer;
 transition-duration: 0.5sec;
 }
 
-.button:hover
+.button1:hover
 {
 position: absolute;
-top: 22%;
-left: 47%;
-right:47%;
+bottom: 80%;
+left:8%;
 background-color: violet;
 color: black;
 border: 5px outset blue;
@@ -58,29 +56,86 @@ ul#menu li a {
     position: absolute;
     left:50%;
     top:50%;
+    transform: translate(-50%,-50%);
 }
 
 ul#menu li a:hover {
     background-color: orange;
 }
 
+p
+{
+	font-family: cambria;
+	color: yellow;
+	font-size: 20px;
+	text-align: center;
+}
+
+div#board
+{
+	background: black;
+	border: 10px inset red;
+	width: 540px;
+	height:250px;
+	padding: 30px;
+	position: absolute;
+	top: 80%;
+	left:50%;
+	right: 50%;
+	transform: translateX(-50%) translateY(-50%);
+}
+
+.center {
+    position: absolute;
+    top: 35%;
+    left: 21%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    color: white;
+}
+
 </style>
 </head>
 
 <body>
-
+<script>
+function contact()
+{
+	document.getElementById("p1").innerHTML="Contact details of Sriram.G";
+	document.getElementById("p2").innerHTML="Mobile: 8438410820";
+	document.getElementById("p3").innerHTML="Mail ID: sriramforever1997@gmail.com";
+	document.getElementById("p4").innerHTML="Website: Sriram-Govindarajan.github.io";
+	document.getElementById("p5").innerHTML="Always feel free to contact me.......!!";
+}
+</script>
+<br>
+<a href="https://twitter.com">
+<img src="twitter.png" alt="Twitter" align="right" height="100" width="100">
+</a>
 <br>
 <br>
+<a href="https://facebook.com">
+<img src="fb.png" alt="Facebook" align="right" height="100" width="100">
+</a>
 <br>
-<br>
-<a href="https://github.com/Sriram-Govindarajan" class="btn btn-info" role="button" class="button">Hit me to go to Sriram's Github page</a>
-<br>
-<br>
-
-
+<a href="https://github.com/Sriram-Govindarajan">
+<img src="github.png" alt="Github account" >
+<div class="center">Hit me to go to Sriram's Github page!! </div>
+</a>
+<a href="https://instagram.com">
+<img src="insta.png" alt="Instagram" align="right" height="100" width="100">
+</a>
+</ul>
 <ul id="menu">
 <li> <a href="http://Sriram-Govindarajan.github.io/game.html"> Memory Game </a> <li>
-</ul>
 
+<div id="board">
+<button type="button" class="button1" onclick="contact()">Contact</button>
+<p id="p1"></p>
+<p id="p2"></p>
+<p id="p3"></p>
+<p id="p4"></p>
+<p id="p5"></p>
+</div>
 </body>
 </html>
